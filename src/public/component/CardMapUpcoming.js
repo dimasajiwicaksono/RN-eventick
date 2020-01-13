@@ -25,11 +25,11 @@ class CardMap extends Component {
         return (
 
             <Card style={styles.card} transparent>
-                <CardItem style={styles.card}>
-                    <Image source={{ uri: image }} style={styles.cardImage} />
-                </CardItem>
                 <Grid>
-                    <Col>
+                    <Col size={2}>
+                        <Image source={{ uri: image }} style={styles.cardImage} />
+                    </Col>
+                    <Col size={4}>
                         <Text style={styles.info}>
                             {date}
                         </Text>
@@ -44,7 +44,7 @@ class CardMap extends Component {
                             <Text style={styles.info}> 
                                 <Icon name= 'map-marker' style={styles.icon}  size={20}/>
                                 <Text>  </Text>
-                                {/* {this.props.address} */}
+                                {/* {address} */}
                                 Gelora Bung Karno
                             </Text>
                             {/* <Text style={styles.info }>
@@ -76,12 +76,11 @@ const styles = StyleSheet.create({
     cardImage: {
         height: 100,
         flex: 1,
-        borderRadius: 20
+        borderRadius: 20,
     },
     card: {
-        width: 200,
-        flex: 0,
-        borderColor: '#fff'
+        borderColor: '#ffff',
+        marginBottom:30
 
     },
 })

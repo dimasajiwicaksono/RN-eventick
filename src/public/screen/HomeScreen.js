@@ -11,50 +11,63 @@ import {
   Content,
 } from 'native-base';
 import axios from 'axios';
-import CardMap from '../component/CardMap'
 import moment from 'moment'
+
+
+
+import CardMap from '../component/CardMap'
+import CardMapUpcoming from '../component/CardMapUpcoming'
+
 
 class HomeScreen extends Component {
   constructor() {
     super();
     this.state = {
       category: [],
-      todayEvent: [],
-      tomorrowEvent: []
+      date: [],
+      tomorrow: []
     }
   }
-  componentDidMount() {
+
+
+
+  async componentDidMount() {
 
     const date = moment(new Date()).format("YYYY-MM-DD")
     var tomorrow = new Date()
-    tomorrow.setDate(moment(tomorrow.getDate() + 1))
+    tomorrow.setDate(moment(tomorrow.getDate()))
 
 
-    axios.get('https://dumb-tickapp.herokuapp.com/api/v1/categories')
+
+    await axios.get('https://dumb-tickapp.herokuapp.com/api/v1/categories')
       .then(res => {
         this.setState({ category: res.data })
       }).catch(err => {
         console.log(err)
       })
 
-    axios.get(`https://dumb-tickapp.herokuapp.com/api/v1/events/${date}`)
+    await axios.get(`https://dumb-tickapp.herokuapp.com/api/v1/events/${date}`)
       .then(res => {
         this.setState({ today: res.data })
       }).catch(err => {
         console.log(err)
       })
 
-    axios.get(`https://dumb-tickapp.herokuapp.com/api/v1/events/${tomorrow}`)
+    await axios.get(`https://dumb-tickapp.herokuapp.com/api/v1/events/${tomorrow}`)
       .then(res => {
-        this.setState({ tomorrow: res.data })
+        this.setState({tomorrow: res.data })
       }).catch(err => {
         console.log(err)
       })
   }
 
   renderCategory = ({ item }) => {
+    const categoryName = item.name.toString().toLowerCase();
+    console.log(categoryName)
+    
     return (
-      <Button onPress={this.handlePress(item.id)} style={styles.categoryButton}>
+      <Button onPress={this.handlePress(item.id)} style={styles.categoryButton} >
+        {/* <Icon name={categoryName}/> */}
         <Text>{item.name}</Text>
       </Button>
     )
@@ -66,9 +79,30 @@ class HomeScreen extends Component {
   }
 
 
-  renderEvents = ({ item }) => {
+  renderEventsToday = ({ item }) => {
     return (
-      <CardMap id={item.id} title={item.title} image={item.img} cardPress={this.handleDetail(item.id)} date={item.startTime} price={item.price} />
+      <CardMap style={styles.card}
+      id={item.id} 
+      title={item.title} 
+      image={item.img} 
+      cardPress={this.handleDetail(item.id)} 
+      date={item.start_time} 
+      price={item.price} 
+      address = {item.address}
+      />
+    )
+  }
+
+  renderEventsUpcoming = ({ item }) => {
+    return (
+      <CardMapUpcoming style={styles.card}
+      id={item.id} 
+      title={item.title} 
+      image={item.img} 
+      cardPress={this.handleDetail(item.id)} 
+      date={item.start_time} 
+      price={item.price} 
+      />
     )
   }
 
@@ -78,11 +112,13 @@ class HomeScreen extends Component {
   }
 
   render() {
+    console.log(this.state.today)
+    console.log(this.state)
     return (
       <Container>
         <Content style={styles.body}>
           <Text style={styles.title}>
-            Category
+            Find Event
             </Text>
           <ScrollView>
             <FlatList
@@ -95,9 +131,10 @@ class HomeScreen extends Component {
           <Text style={styles.title}>
             Today
             </Text>
-          <FlatList
+          <FlatList 
+          
             data={this.state.today}
-            renderItem={this.renderEvents}
+            renderItem={this.renderEventsToday}
             horizontal
             showsHorizontalScrollIndicator={false}
 
@@ -108,8 +145,7 @@ class HomeScreen extends Component {
           <ScrollView>
             <FlatList
               data={this.state.tomorrow}
-              renderItem={this.renderEvents}
-              horizontal
+              renderItem={this.renderEventsUpcoming}
             />
           </ScrollView>
         </Content>
@@ -121,7 +157,7 @@ class HomeScreen extends Component {
 
 const styles = StyleSheet.create({
   body: {
-    backgroundColor: "#F4E1E1",
+    // backgroundColor: "#F4E1E1",
     padding: 20
   },
   title: {
@@ -143,6 +179,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#ff7315',
     borderRadius: 20
   },
+  card : {
+    borderRadius:40,
+    // backgroundColor:'#232020'
+  }
 })
 
 export default HomeScreen

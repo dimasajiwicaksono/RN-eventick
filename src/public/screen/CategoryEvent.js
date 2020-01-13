@@ -18,7 +18,7 @@ import {
 } from 'native-base';
 import axios from 'axios';
 
-import CardMap from '../component/CardMap';
+import CardMapCategories from '../component/CardMapCategories';
 
 class CategoryEvent extends Component {
     constructor() {
@@ -29,11 +29,11 @@ class CategoryEvent extends Component {
         }
     }
 
-    componentDidMount(){
+    async componentDidMount(){
         const { navigation } = this.props
         const id = JSON.stringify(navigation.getParam('id','default value'))
 
-        axios.get(`https://dumb-tickapp.herokuapp.com/api/v1/category/${id}/events`)
+        await axios.get(`https://dumb-tickapp.herokuapp.com/api/v1/category/${id}/events`)
         .then(res =>{
             this.setState({
                 name:res.data.name,
@@ -43,16 +43,26 @@ class CategoryEvent extends Component {
         .catch(err=>{ console.log(err) })
     }
 
+    handleDetail = (value) => () => {
+        this.props.navigation.navigate('DetailEvent', { id: value })
+    }
+    
+
     renderEvents = ({ item }) => {
         return (
-            <CardMap id={item.id} title={item.title} image={item.img} date={item.startTime} price={item.price} />
+            <CardMapCategories id={item.id} 
+                title={item.title} 
+                image={item.img} 
+                cardPress={this.handleDetail(item.id)} 
+                date={item.start_time} 
+                price={item.price} />
         )
     }
 
     render() {
         const {events, name } = this.state
         return (
-            <Container>
+            <Container style={{justifyContent:'center'}}>
                 <Content style={styles.body}>
                     <Text style={styles.title}>
                         {name}
@@ -61,7 +71,6 @@ class CategoryEvent extends Component {
                         <FlatList
                             data={events}
                             renderItem={this.renderEvents}
-                            horizontal
                         />
                     </ScrollView>
                 </Content>
@@ -72,8 +81,9 @@ class CategoryEvent extends Component {
 
 const styles = StyleSheet.create({
     body: {
-        backgroundColor: "#F4E1E1",
-        padding: 20
+        // backgroundColor: "#F4E1E1",
+        padding: 20,
+        
     },
     title: {
         fontSize: 20,

@@ -1,17 +1,23 @@
 import React, { Component } from 'react';
-import { Image, StyleSheet } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity } from 'react-native';
 import {
     Content,
     Card,
     CardItem,
     Text,
-    Body,
-    Title,
-    Right,
     Button,
+    Tabs,
+    Tab,
+    TabHeading
 } from 'native-base';
+import { Grid, Row, Col } from 'react-native-easy-grid';
 import axios from 'axios';
 import moment from 'moment';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+
+import Description from '../component/DetailEVentTab/Description'
+import Review from '../component/DetailEVentTab/Review'
 
 
 class DetailEvent extends Component {
@@ -19,9 +25,36 @@ class DetailEvent extends Component {
         super();
         this.state = {
             event: [],
-            categoryName: ''
+            categoryName: '',
+            num: 1,
+            backgroundColor: '#ffff',
         }
     }
+
+
+    handlePressDecreament = () => {
+        if (this.state.num > 1) {
+            this.setState({
+                num: this.state.num - 1
+            })
+        }
+    }
+
+
+    handlePressIncreament = () => {
+        if (this.state.num < 10 ) {
+        this.setState({
+            num: this.state.num + 1
+        })} else {
+            alert('Maaf Terlalu banyak Anda Memesan Tiket')
+        }
+    }
+
+
+    handlePressCheckout = () => {
+        alert(this.state.num)
+    }
+
 
     componentDidMount() {
         const { navigation } = this.props
@@ -44,44 +77,67 @@ class DetailEvent extends Component {
             <Content style={styles.root}>
                 <Card>
                     <CardItem cardBody>
-                        <Image source={{ uri: img }} style={{ height: 200, width: null, flex: 1 }} />
+                        <Image source={{ uri: img }}
+                            style={styles.img} 
+                            />
                     </CardItem>
                     <CardItem style={styles.cardbody}>
-
-                        <Text style={styles.title}>
-                            {title}
-                        </Text>
+                        <Grid >
+                            <Row style={{justifyContent:'center'}}> 
+                            <Text style={styles.title}>
+                                {title}
+                            </Text></Row>
+                            <Row style={{marginTop:20}}>
+                                <Col>
+                                <Text style={styles.textTotal}>
+                                    {this.state.num} Tickets
+                                </Text></Col>
+                                <Col>
+                                <Text style={styles.textTotal}>
+                                Rp {this.state.num * price}
+                                </Text></Col>
+                            </Row>
+                        </Grid>
                     </CardItem>
-                    <CardItem style={styles.cardbody}>
-                        <Body>
-                            <Text>
-                                Date: {date}
+                    <CardItem style={styles.cardBodyButton}>
+                        <TouchableOpacity
+                            style={styles.buttonSection}
+                            onPress={this.handlePressDecreament}>
+                            <Text style={styles.Text}>
+                                <Icon name='minus'/>
                             </Text>
-                            <Text>
-                                Time: {timeStart} - {timeEnd}
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.button}
+                        onPress={()=> this.props.navigation.navigate('Checkout')}>
+                            <Text style={{fontSize:18, color:'#fff', fontWeight:'bold'}}>
+                                Buy Now
                             </Text>
-                            <Text>
-                                Event Type: {this.state.categoryName}
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.buttonSection}
+                            onPress={this.handlePressIncreament}>
+                            <Text style={styles.Text}>
+                            <Icon name='plus'/>
                             </Text>
-                            <Text>
-                                Price: Rp.{price}
-                            </Text>
-                        </Body>
-                        <Right>
-                            <Button style={styles.button}>
-                                <Text>Buy Ticket</Text>
-                            </Button>
-                        </Right>
+                        </TouchableOpacity>
+        
                     </CardItem>
+                    <Tabs tabBarUnderlineStyle={{backgroundColor:'#ff7315'}}>
+                        <Tab heading = { 
+                            <TabHeading 
+                                style={{backgroundColor:'#ffff'}}>
+                                <Text >Detail</Text>
+                            </TabHeading>}>
+                            <Description 
+                                />
+                        </Tab>
+                        <Tab heading = {
+                            <TabHeading
+                                style={{backgroundColor:'#ffff'}}><Text>Review</Text></TabHeading>}>
+                            <Review />
+                        </Tab>
+                    </Tabs>
                 </Card>
-                <Body style={styles.bodyDescription}>
-                    <Title style={styles.titleDescription}>
-                        Event Description :
-                </Title>
-                    <Text style={styles.description}>
-                        {description}
-                    </Text>
-                </Body>
             </Content>
         )
     }
@@ -91,15 +147,26 @@ const styles = StyleSheet.create({
     root: {
         flex: 1,
         display: 'flex',
-        backgroundColor: '#F4E1E1'
+        backgroundColor: '#ffff'
+    },
+    img : { 
+        height: 200,
+        width: null, 
+        flex: 1,
+        borderRadius:20
     },
     title: {
-        fontSize: 25,
-        fontWeight: 'bold'
+        fontSize: 18,
+        fontWeight: 'bold',
+        alignItems:'center'
     },
     cardbody: {
-        backgroundColor: 'rgba(0,0,0,0.15)'
+        backgroundColor: '#ffff',
     },
+    cardBodyButton : {
+        marginTop:0, 
+        height:70}
+    ,
     titleDescription: {
         fontSize: 25,
         fontWeight: 'bold',
@@ -117,8 +184,39 @@ const styles = StyleSheet.create({
     },
     button: {
         backgroundColor: "#ff7315",
-        borderRadius:20
-    }
+        borderRadius: 50,
+        justifyContent: 'center',
+        height: 50,
+        width: "50%",
+        marginLeft:10,
+        marginRight:10,
+        marginTop:0,
+        alignItems: 'center'
+    },
+    buttonSection: {
+        width: '20%',
+        height: '130%',
+        borderRadius: 60,
+        justifyContent: 'center',
+        backgroundColor: '#f6f4e6',
+    },
+    Text: {
+        fontSize: 20,
+        textAlign:'center'
+    },
+    bodyTextTotal : {
+        display:'flex',
+        flexDirection: 'row',
+    },
+    textTotal: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginLeft: 20,
+        marginRight: 20
+    },
+    tabs : {
+        backgroundColor:'#ffff'
+    },
 })
 
 export default DetailEvent
