@@ -21,9 +21,9 @@ class Checkout extends Component {
                 <Row style={{ alignContent:'center', marginTop:30 }}>
                     <Col size={1} ><Text>Image</Text></Col>
                     <Col size={2} >
-                        <Text style={styles.text}>LIVE CONCERT RAISA IN JAKARTA 2020</Text>
+                        <Text style={styles.text}>KERONCONG NATION : NOSTALGIA MEMBAWA PERUBAHAN</Text>
                         <Text>GELORA BUNG KARNO</Text>
-                        <Text style={styles.text}>20 JUNI 2020</Text>
+                        <Text style={styles.text}>15 JANUARI 2020</Text>
                     </Col>
                 </Row>
                 <Row  style={{flexDirection: 'column', height:250, marginTop:20, marginBottom:20}}>
@@ -33,15 +33,15 @@ class Checkout extends Component {
                     </Col>
                     <Col style={styles.col}>
                         <Row size={4}><Text>Price</Text></Row>
-                        <Row size={2}><Text style={styles.text}>Rp 200000</Text></Row>
+                        <Row size={2}><Text style={styles.text}>Rp 500000</Text></Row>
                     </Col>
                     <Col style={styles.col}>
                         <Row size={4}><Text>Sub Total</Text></Row>
-                        <Row size={2}><Text style={styles.text}>Rp 400000</Text></Row>
+                        <Row size={2}><Text style={styles.text}>Rp 500000</Text></Row>
                     </Col>
                     <Col style={styles.col}>
                         <Row size={4}><Text style={{ fontWeight: 'bold', fontSize:20 }}>Total Amount</Text></Row>
-                        <Row size={2}><Text style={{ fontWeight: 'bold', fontSize:20 }}>Rp 400000</Text></Row>
+                        <Row size={2}><Text style={{ fontWeight: 'bold', fontSize:20 }}>Rp 500000</Text></Row>
                     </Col>
                 </Row>
                 

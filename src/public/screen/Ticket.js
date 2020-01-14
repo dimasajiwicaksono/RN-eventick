@@ -40,11 +40,11 @@ class Ticket extends Component {
                             MUSIC
                             </Text>
                         <Text style={styles.textTitle}>
-                            NIGHT LIVE MUSIC CONCERT 2018
+                           KERONCONG NATION : NOSTALGIA MEMBAWA PERUBAHAN
                             </Text>
-                        <Text style={{ color: 'white', marginLeft: 30 }}>
-                            Charlie puth
-                            </Text>
+                        {/* <Text style={{ color: 'white', marginLeft: 30 }}>
+                            Charlie Puth
+                            </Text> */}
                     </Card>
                 </Row>
 
@@ -58,7 +58,7 @@ class Ticket extends Component {
                             <Row style={styles.row}>
                                 <Col size={2}>
                                     <Text>Date</Text>
-                                    <Text>22 June 2020</Text>
+                                    <Text>15 January 2020</Text>
                                 </Col>
                                 <Col size={1}>
                                     <Text>Time</Text>
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     textTitle: {
-        fontSize: 30,
+        fontSize: 25,
         marginLeft: 30,
         color: 'white',
         fontWeight: 'bold'
