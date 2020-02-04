@@ -18,6 +18,10 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 class CardMap extends Component {
 
+    handleDetail = (value) => () => {
+        this.props.navigation.navigate('DetailEvent', { id: value })
+      }
+
     render() {
         const { title, image, cardPress } = this.props
         const infodate = new Date(this.props.date)
@@ -52,7 +56,7 @@ class CardMap extends Component {
                                 </Col>
                                 <Col size={1}>
                                     <TouchableOpacity style={styles.button}
-                                        onPress={()=> alert('dibuat per id')}>
+                                        onPress={this.handleDetail}>
                                         <Text style={{paddingTop:5, color:'white', fontWeight:'bold'}}> Buy</Text>
                                     </TouchableOpacity>
                                 </Col>
@@ -60,9 +64,7 @@ class CardMap extends Component {
                         </Content>
                     </Col>
                 </Grid>
-
             </Card>
-
         )
     }
 }
@@ -75,10 +77,9 @@ const styles = StyleSheet.create({
         marginBottom: 0,
         color: "#FF5555",
         borderRadius: 20,
-        // marginLeft: 20
     },
     info: {
-        // marginLeft: 20,
+    
         marginTop:10,
     },
     cardImage: {

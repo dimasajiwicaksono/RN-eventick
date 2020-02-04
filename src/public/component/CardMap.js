@@ -5,12 +5,11 @@ import {
 
 } from 'react-native';
 import {
-  
     Text,
- 
     Card,
     CardItem,
     Content,
+
 
 } from 'native-base';
 import moment from 'moment';
@@ -53,9 +52,7 @@ class CardMap extends Component {
                         </Content>
                     </Col>
                 </Grid>
-
             </Card>
-
         )
     }
 }
@@ -68,18 +65,20 @@ const styles = StyleSheet.create({
         marginBottom: 0,
         color: "#FF5555",
         borderRadius: 20,
-        marginLeft: 20
+     
     },
     info: {
-        marginLeft: 20,
+       
     },
     cardImage: {
+        marginLeft : -20,
         height: 100,
+        width : 50,
         flex: 1,
         borderRadius: 20
     },
     card: {
-        width: 200,
+        width: 175,
         flex: 0,
         borderColor: '#fff'
 

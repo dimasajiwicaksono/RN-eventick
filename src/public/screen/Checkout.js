@@ -4,56 +4,76 @@ import {
     Text,
     Button,
     Input,
-    Content
+    Content,
+    Card,
+    CardItem,
+    Image,
 } from 'native-base'
 import { Grid, Row, Col } from 'react-native-easy-grid'
 
 class Checkout extends Component {
 
+    constructor() {
+        super();
+        this.state={
+            coupon : ''
+        }
+    }
+
     handlePress = () => {
         this.props.navigation.navigate('Ticket')
     }
 
+    handlePressCoupon = () => {
+        if (this.state.coupon === 'DISCOUNT') {
+
+        }
+    }
     render() {
+        const {params} = this.props.navigation.state
+
         return (
             <Content >
             <Grid style={styles.mainContainer}>
                 <Row style={{ alignContent:'center', marginTop:30 }}>
-                    <Col size={1} ><Text>Image</Text></Col>
+                    <Col size={1} >
+                        
+                    </Col>
                     <Col size={2} >
-                        <Text style={styles.text}>KERONCONG NATION : NOSTALGIA MEMBAWA PERUBAHAN</Text>
+                        <Text style={styles.text}>{params.title}</Text>
                         <Text>GELORA BUNG KARNO</Text>
-                        <Text style={styles.text}>15 JANUARI 2020</Text>
+                        <Text style={styles.text}>{params.date}</Text>
                     </Col>
                 </Row>
                 <Row  style={{flexDirection: 'column', height:250, marginTop:20, marginBottom:20}}>
                     <Col style={styles.col}>
                         <Row size={4}><Text>Ticket</Text></Row>
-                        <Row size={2}><Text style={styles.text}> 2 Ticket</Text></Row>
+                        <Row size={2}><Text style={styles.text}> {params.ticketTotal} Ticket</Text></Row>
                     </Col>
                     <Col style={styles.col}>
                         <Row size={4}><Text>Price</Text></Row>
-                        <Row size={2}><Text style={styles.text}>Rp 500000</Text></Row>
+        <Row size={2}><Text style={styles.text}>Rp {params.price}</Text></Row>
                     </Col>
                     <Col style={styles.col}>
                         <Row size={4}><Text>Sub Total</Text></Row>
-                        <Row size={2}><Text style={styles.text}>Rp 500000</Text></Row>
+        <Row size={2}><Text style={styles.text}>Rp {params.total}</Text></Row>
                     </Col>
                     <Col style={styles.col}>
                         <Row size={4}><Text style={{ fontWeight: 'bold', fontSize:20 }}>Total Amount</Text></Row>
-                        <Row size={2}><Text style={{ fontWeight: 'bold', fontSize:20 }}>Rp 500000</Text></Row>
+        <Row size={2}><Text style={{ fontWeight: 'bold', fontSize:20 }}>Rp {params.total}</Text></Row>
                     </Col>
                 </Row>
                 
                 <Row style={{ flexDirection: 'column' }}>
-
                     <Col style={styles.col}>
                         <Row size={4}>
                             <Input
-                                placeholder="Enter Coupon Code"/>
+                                placeholder="Enter Coupon Code"
+                                onChangeText={(coupon)=> this.setState({coupon})}/>
                         </Row>
                         <Row size={2}>
-                            <Button style={styles.btnApply}>
+                            <Button style={styles.btnApply}
+                                onPress={this.handlePressCoupon}>
                                 <Text>Apply</Text>
                             </Button>
                         </Row>

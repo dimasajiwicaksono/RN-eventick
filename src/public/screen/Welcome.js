@@ -6,10 +6,8 @@ export default class Welcome extends Component {
         return (
             <Grid>
                 <Row  style={{backgroundColor:'red'}}>
-
                 </Row>
                 <Row  style={{backgroundColor:'blue'}}>
-
                 </Row>
             </Grid>
         )

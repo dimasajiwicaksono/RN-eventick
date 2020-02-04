@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import { createAppContainer, NavigationEvents } from 'react-navigation';
+import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import { StyleSheet, Button } from 'react-native'
+import { StyleSheet} from 'react-native'
 
 import CategoryEvent from './src/public/screen/CategoryEvent';
 import HomeScreen from './src/public/screen/HomeScreen';
@@ -69,7 +68,6 @@ const AppNavigator = createStackNavigator(
     headerStyle: {
       backgroundColor: '#fff',
     },
-    // headerTintColor: '#232020',
     headerTitleStyle: {
       fontWeight: 'bold',
       fontSize: 30

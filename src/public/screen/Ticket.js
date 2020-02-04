@@ -40,20 +40,18 @@ class Ticket extends Component {
                             MUSIC
                             </Text>
                         <Text style={styles.textTitle}>
-                           KERONCONG NATION : NOSTALGIA MEMBAWA PERUBAHAN
+                            KERONCONG NATION : NOSTALGIA MEMBAWA PERUBAHAN
                             </Text>
                         {/* <Text style={{ color: 'white', marginLeft: 30 }}>
                             Charlie Puth
                             </Text> */}
                     </Card>
                 </Row>
-
                 <Row size={4} style={{
                     backgroundColor: 'white',
                     justifyContent: 'center'
                 }}>
                     <Card style={styles.card}>
-
                         <Grid >
                             <Row style={styles.row}>
                                 <Col size={2}>

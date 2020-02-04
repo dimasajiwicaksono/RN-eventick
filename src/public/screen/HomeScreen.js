@@ -4,9 +4,7 @@ import {
   FlatList,
   ScrollView,
   TouchableOpacity,
-  View,
-  
-  
+
 } from 'react-native'
 import {
   Container,
@@ -15,8 +13,7 @@ import {
   Content,
   Input,
   Item,
-  Label
-  
+  Label,
 
 } from 'native-base';
 import axios from 'axios';
@@ -37,13 +34,18 @@ class HomeScreen extends Component {
     this.state = {
       category: [],
       date: [],
-      tomorrow: []
+      tomorrow: [],
+      eventSearch: [],
     }
   }
 
   static navigationOptions = ({ navigation }) => {
     let headerTitle = 'e-Ventick';
-    let headerTitleStyle = { color: '#4d4646', fontSize: 30, fontWeight: 'bold' };
+    let headerTitleStyle = { 
+        color: '#4d4646', 
+        fontSize: 30, 
+        fontWeight: 'bold'};
+
     let headerRight = (
       <TouchableOpacity bordered
         style={styles.btnLogin}
@@ -80,26 +82,40 @@ class HomeScreen extends Component {
         this.setState({ tomorrow: res.data })
       }).catch(err => {
         console.log(err)
-      })
+      });
   }
+
+  
 
   renderCategory = ({ item }) => {
-    const categoryName = item.name.toString().toLowerCase();
-    // console.log(categoryName)
+    const icon = item.name.toString().toLowerCase()
+    const logo = this.state.category
+    const object = {id:4, name:'CODE'}
+    const index = logo.findIndex(({ name, id }) => name == object.name || id === object.id);
+
+    if (index === -1 ) {
+      logo.push(object)
+    } else {
+      logo[index] = object
+    }
+
 
     return (
-      <Button onPress={this.handlePress(item.id)} style={styles.categoryButton} >
-
-        <Text>{item.name}</Text>
-      </Button>
+      <Content >
+        <Button onPress={this.handlePress(item.id)} 
+            style={styles.categoryButton} >
+            <Icon name={icon} size={40} style={{color:'white'}}/>
+        </Button>
+        <Button transparent style={styles.textCategory}>
+          <Text style={styles.text}>{item.name}</Text>
+        </Button>
+      </Content>
     )
   }
-
 
   handleDetail = (value) => () => {
     this.props.navigation.navigate('DetailEvent', { id: value })
   }
-
 
   renderEventsToday = ({ item }) => {
     return (
@@ -127,13 +143,12 @@ class HomeScreen extends Component {
     )
   }
 
-
-
   handlePress = (value) => () => {
     this.props.navigation.navigate('CategoryEvent', { id: value });
   }
 
   render() {
+    console.log(this.state.search)
     return (
       <Container>
         <Content style={styles.body}>
@@ -142,7 +157,8 @@ class HomeScreen extends Component {
           <Item floatingLabel>
               <Label> Search</Label>
               <Icon name='search' style={{ fontSize: 20}} />
-                <Input />
+                <Input 
+                  onChangeText ={this.handleSearch}/>
           </Item>
           <Text style={styles.title}>
             Find Event
@@ -159,12 +175,10 @@ class HomeScreen extends Component {
             Today
             </Text>
           <FlatList
-
             data={this.state.today}
             renderItem={this.renderEventsToday}
             horizontal
             showsHorizontalScrollIndicator={false}
-
           />
           <Text style={styles.title}>
             Coming Event
@@ -184,8 +198,8 @@ class HomeScreen extends Component {
 
 const styles = StyleSheet.create({
   body: {
-  
-    padding: 20
+    paddingLeft: 5,
+    paddingRight:-5
   },
   h1: {
     fontSize: 30,
@@ -211,32 +225,42 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: "#232020",
     marginTop: 20,
-    marginBottom: 10
+    marginBottom : 5,
+    marginLeft: 10,
   },
   categoryButton: {
     fontSize: 10,
-    height: 50,
-    width: 100,
+    height: 70,
+    width: 70,
     flex: 1,
     display: 'flex',
     justifyContent: 'center',
-    marginRight: 8,
-    marginLeft: 8,
+    marginRight: 9,
+    marginLeft: 9,
     backgroundColor: '#ff7315',
     borderRadius: 20
+  },
+  textCategory : {
+    backgroundColor:'transparent',
+    justifyContent:'center',
+    borderColor: 'transparent',
+    
+  },
+  text : {
+    color:'black'
   },
   card: {
     borderRadius: 40,
   },
   btnLogin: {
-    // backgroundColor: 'transparent',
+   
     width: 80,
     height: 40,
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
     textAlign:'center',
-    // border:'red'
+   
   },
   search : {
     marginTop : 20,

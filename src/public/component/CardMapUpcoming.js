@@ -2,16 +2,11 @@ import React, { Component } from 'react';
 import {
     StyleSheet,
     Image,
-
 } from 'react-native';
 import {
-  
     Text,
- 
     Card,
-    CardItem,
     Content,
-
 } from 'native-base';
 import moment from 'moment';
 import { Grid, Col } from 'react-native-easy-grid'
@@ -23,7 +18,6 @@ class CardMap extends Component {
         const infodate = new Date(this.props.date)
         const date = moment(infodate).utc(false).format("DD MMMM")
         return (
-
             <Card style={styles.card} transparent>
                 <Grid>
                     <Col size={2}>
@@ -47,15 +41,10 @@ class CardMap extends Component {
                                 {/* {address} */}
                                 Gelora Bung Karno
                             </Text>
-                            {/* <Text style={styles.info }>
-                                {price}
-                            </Text> */}
                         </Content>
                     </Col>
                 </Grid>
-
             </Card>
-
         )
     }
 }
@@ -68,10 +57,12 @@ const styles = StyleSheet.create({
         marginBottom: 0,
         color: "#FF5555",
         borderRadius: 20,
-        marginLeft: 20
+        marginLeft: 20,
+        marginTop : 10
     },
     info: {
         marginLeft: 20,
+        marginTop : 5
     },
     cardImage: {
         height: 100,

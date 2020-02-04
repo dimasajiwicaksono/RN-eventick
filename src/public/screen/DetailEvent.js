@@ -31,7 +31,7 @@ class DetailEvent extends Component {
         }
     }
 
-
+// <--- handle event -->
     handlePressDecreament = () => {
         if (this.state.num > 1) {
             this.setState({
@@ -39,7 +39,6 @@ class DetailEvent extends Component {
             })
         }
     }
-
 
     handlePressIncreament = () => {
         if (this.state.num < 10 ) {
@@ -49,12 +48,9 @@ class DetailEvent extends Component {
             alert('Maaf Terlalu banyak Anda Memesan Tiket')
         }
     }
-
-
     handlePressCheckout = () => {
         alert(this.state.num)
     }
-
 
     componentDidMount() {
         const { navigation } = this.props
@@ -68,11 +64,15 @@ class DetailEvent extends Component {
             })
             .catch(err => { console.log(err) })
     }
+    
     render() {
-        const { title, price, img, description, startTime, endTime } = this.state.event
+        const { title, price, img, description, startTime, endTime, address } = this.state.event
         const date = moment(startTime).utc(false).format("DD MMMM YYYY")
         const timeStart = moment(startTime).utc(false).format("HH:mm")
         const timeEnd = moment(endTime).utc(false).format("HH:mm")
+        const ticketTotal = this.state.num;
+        const total = this.state.num* price
+
         return (
             <Content style={styles.root}>
                 <Card>
@@ -108,7 +108,10 @@ class DetailEvent extends Component {
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.button}
-                        onPress={()=> this.props.navigation.navigate('Checkout')}>
+                        onPress={()=> 
+                            this.props.navigation.navigate('Checkout', 
+                            {date, title, img, ticketTotal, total, price})}
+                        >
                             <Text style={{fontSize:18, color:'#fff', fontWeight:'bold'}}>
                                 Buy Now
                             </Text>
@@ -120,7 +123,6 @@ class DetailEvent extends Component {
                             <Icon name='plus'/>
                             </Text>
                         </TouchableOpacity>
-        
                     </CardItem>
                     <Tabs tabBarUnderlineStyle={{backgroundColor:'#ff7315'}}>
                         <Tab heading = { 
@@ -129,6 +131,11 @@ class DetailEvent extends Component {
                                 <Text >Detail</Text>
                             </TabHeading>}>
                             <Description 
+                                description={description}
+                                date ={date}
+                                time = {timeStart}
+                                timeEnd = {timeEnd}
+                                venue ={address}
                                 />
                         </Tab>
                         <Tab heading = {
